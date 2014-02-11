@@ -6,7 +6,7 @@
 package main
 
 import (
-    "captcha"
+    "github.com/kaz8/go-captcha"
     "flag"
     "fmt"
     "log"
