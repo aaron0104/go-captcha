@@ -6,40 +6,40 @@
 package main
 
 import (
-    "github.com/kaz8/go-captcha"
-    "flag"
-    "fmt"
-    "log"
-    "os"
+	"flag"
+	"fmt"
+	"github.com/kaz8/go-captcha"
+	"log"
+	"os"
 )
 
 var (
-    flagLen  = flag.Int("l", 6, "length of captcha")
-    flagImgW = flag.Int("w", captcha.StdWidth, "image captcha width")
-    flagImgH = flag.Int("h", captcha.StdHeight, "image captcha height")
+	flagLen  = flag.Int("l", 6, "length of captcha")
+	flagImgW = flag.Int("w", captcha.StdWidth, "image captcha width")
+	flagImgH = flag.Int("h", captcha.StdHeight, "image captcha height")
 )
 
 func usage() {
-    fmt.Fprintf(os.Stderr, "usage: captcha [flags] filename\n")
-    flag.PrintDefaults()
+	fmt.Fprintf(os.Stderr, "usage: captcha [flags] filename\n")
+	flag.PrintDefaults()
 }
 
 func main() {
-    log.SetFlags(0)
-    flag.Parse()
-    fname := flag.Arg(0)
-    if fname == "" {
-        usage()
-        os.Exit(2)
-    }
-    f, err := os.Create(fname)
-    if err != nil {
-        log.Fatalf("%s", err)
-    }
-    defer f.Close()
-    err = captcha.WriteImage(f,
-        captcha.RandomDigits(*flagLen), *flagImgW, *flagImgH)
-    if err != nil {
-        log.Fatalf("%s", err)
-    }
+	log.SetFlags(0)
+	flag.Parse()
+	fname := flag.Arg(0)
+	if fname == "" {
+		usage()
+		os.Exit(2)
+	}
+	f, err := os.Create(fname)
+	if err != nil {
+		log.Fatalf("%s", err)
+	}
+	defer f.Close()
+	err = captcha.WriteImage(f,
+		captcha.RandomDigits(*flagLen), *flagImgW, *flagImgH)
+	if err != nil {
+		log.Fatalf("%s", err)
+	}
 }
