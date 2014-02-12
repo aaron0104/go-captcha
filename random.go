@@ -6,6 +6,8 @@ package captcha
 
 import (
 	"crypto/rand"
+	"errors"
+	"fmt"
 	"io"
 )
 
@@ -14,6 +16,19 @@ import (
 // solution.
 func RandomDigits(length int) []byte {
 	return randomBytesMod(length, 10)
+}
+
+func DigitString(digits []byte) (s string, err error) {
+	buf := make([]byte, len(digits))
+	for i, d := range digits {
+		if d > 9 {
+			err = errors.New(fmt.Sprintf("captcha: %d is invalid digit, can only use 0-9", d))
+			return
+		}
+		buf[i] = '0' + d
+	}
+	s = string(buf)
+	return
 }
 
 // randomBytes returns a byte slice of the given length read from CSPRNG.
